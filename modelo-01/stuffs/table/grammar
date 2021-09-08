@@ -1,0 +1,110 @@
+GRAMÁTICA P/ UTILIZAR NO https://cyberzhg.github.io/toolbox/lr0
+
+BEAUTIFY TABLE: https://beautifytools.com/html-beautifier.php
+
+HTML TO CSV: https://products.groupdocs.app/conversion/html-to-csv
+
+CSV TO EXCEL: https://convertio.co/pt/csv-xlsx/
+	      	  https://cloudconvert.com/csv-to-xlsx
+
+
+#######################################################################################################################
+
+
+<stmts>       -> <stmt> | <stmt> <stmts> | <function> | <function> <stmts>
+<stmt>        -> <if> <else> | <for> | <read> | <write> | <declaration>
+
+<if>          -> qui <rel> { <stmt> | qui <log> { <stmt>
+<else>        -> cela entulesse { <stmt> } | }
+
+<expr>        -> <arit> | <rel> | <log>
+<arit>		  -> ( <arit> ) opa <factor> | <factor>
+<factor>	  -> id | number | ( <arit> )
+<rel> 	      -> <arit> opr <arit>
+<log> 		  -> ( <log> ) opl id | id
+
+<for>         -> an ( <for-expr> ) car { <stmt> } | an ( note <for-expr> ) car { <stmt> }
+<for-expr>    -> id = <factor>, id OP_REL <factor>, id<postfix>
+<postfix>     -> ++ | --
+
+<read>        -> ista ( id );
+<write>       -> sarme ( <factor> ); | sarme ( <expr> );
+
+<type>        -> note | liltengwa | yulmavene
+<declaration> -> <type> id ; | <type> id = <factor> ;
+
+<function>    -> hyaline id ( <params> ) { <stmt> } | hyaline id () { <stmt> }
+<params>      -> <type> id, <params> | <type> id
+
+
+#######################################################################################################################
+
+
+TO USANDO ESSA PRA TESTE:
+
+Stmts -> Stmt | Stmt Stmts | Function | Function Stmts
+Stmt -> If Else | For | Read | Write | Declaration ;
+If -> qui Rel { Stmt | qui Log { Stmt
+Else -> cela entulesse { Stmt } | }
+Expr -> Arit | Rel | id Log
+
+Arit -> Arit opa Factor | Factor
+Factor -> id | number | ( Arit )
+Rel -> Arit opr Arit
+Log -> opl id Log | opl boolean
+
+For -> an ( note Forexpr ) car { Stmt } | an ( Forexpr ) car { Stmt }
+Forexpr -> id = Factor , id oprel Factor , id Postfix
+Postfix -> ++ | --
+Read -> ista ( id ) ;
+Write -> sarme ( Expr ) ;
+Type -> note | liltengwa | yulmavene
+Declaration -> Type id | Type id = Factor
+Function -> hyaline id ( Params ) { Stmt } | hyaline id ( ) { Stmt }
+Params -> Type id , Params | Type id
+
+
+#######################################################################################################################
+
+
+PRODUÇÕES:
+00) Stmts -> Stmt
+01) Stmts -> Stmt Stmts
+02) Stmts -> Function
+03) Stmts -> Function Stmts
+04) Stmt -> If Else
+05) Stmt -> For
+06) Stmt -> Read
+07) Stmt -> Write
+08) Stmt -> Declaration ;
+09) If -> qui Rel { Stmt
+10) If -> qui Log { Stmt
+11) Else -> cela entulesse { Stmt }
+12) Else -> }
+13) Expr -> Arit
+14) Expr -> Rel
+15) Expr -> id Log
+16) Arit -> Arit opa Factor
+17) Arit -> Factor
+18) Factor -> id
+19) Factor -> number
+20) Factor -> ( Arit )
+21) Rel -> Arit opr Arit
+22) Log -> opl id Log
+23) Log -> opl boolean
+24) For -> an ( note Forexpr ) car { Stmt }
+25) For -> an ( Forexpr ) car { Stmt }
+26) Forexpr -> id = Factor , id oprel Factor , id Postfix
+27) Postfix -> ++
+28) Postfix -> --
+29) Read -> ista ( id ) ;
+30) Write -> sarme ( Expr ) ;
+31) Type -> note
+32) Type -> liltengwa
+33) Type -> yulmavene
+34) Declaration -> Type id
+35) Declaration -> Type id = Factor
+36) Function -> hyaline id ( Params ) { Stmt }
+37) Function -> hyaline id ( ) { Stmt }
+38) Params -> Type id , Params
+39) Params -> Type id
