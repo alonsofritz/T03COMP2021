@@ -1,5 +1,5 @@
 -- Funcao Principal
 hyaline main () {
     note sum = (5 + 9);
-    sarme(sum);
+    --sarme(sum);
 }

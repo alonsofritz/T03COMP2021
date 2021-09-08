@@ -8,19 +8,22 @@ import pandas as pd      # Para manipular os dados da Tabela Excel .xlsx
 """ Classe que representa o analisador léxico """
 """ Bottom-up => LR(1) """
 """ LR(1)     => Redução pelo lado esquerdo """
+
+
 class Syntactic():
-    
+
     def __init__(self):
-        
+
         # Start léxico
         self.lex = l.Lex()
         self.lex.start()
         self.lex.printTokenList()
 
         # Tabela sintática
-        self.tableExcel = pd.read_excel('./stuffs/table/table.xlsx', skiprows=1, index_col=0)
+        self.tableExcel = pd.read_excel(
+            './stuffs/table/table.xlsx', skiprows=1, index_col=0)
         self.tableSyntax = self.tableExcel.to_numpy()
-        
+
         # Arquivo de saída do sintático
         self.output_file = "sync.txt"
         self.output_file = open(self.output_file, 'w')
@@ -29,11 +32,53 @@ class Syntactic():
         self.stack = s.Stack()
         self.stack.push(0)
 
-        # Quantidade de elementos gerados por uma produção	
-        self.sizeProduction = [1,  2,  1,  2,  2,  1,  1,  1,  1,  4,  4,  5,  1,  3,  3,  3,  1,  5,  5,  5,  1,  1,  1,  1,  8,  10,  11,  1,  1,  5,  5,  3,  2,  5,  5,  5,  5,  5,  2,  2,  2,  8,  7,  4,  2]
+        # Quantidade de elementos gerados por uma produção
+        self.sizeProduction = [1,  2,  1,  2,  2,  1,  1,  1,  2,  4,  4,  5,  1,  1,  1,
+                               2,  3,  1, 1, 1, 3, 3, 3, 2, 9, 8, 10, 1, 1, 5, 5, 1, 1, 1, 2, 4, 8, 7, 4, 2]
 
         # Produções existentes
-        self.productions = ['A', 'A', 'A', 'A', 'B', 'B', 'B', 'B', 'B', 'D', 'D', 'E', 'E', 'J', 'J', 'J', 'J', 'K', 'L', 'M', 'M', 'M', 'N', 'N', 'F', 'O', 'O', 'S', 'S', 'G', 'H', 'H', 'I', 'I', 'I', 'I', 'I', 'I', 'Q', 'Q', 'Q', 'C', 'C', 'R', 'R']
+        self.productions = [
+            'Stmts',
+            'Stmts',
+            'Stmts',
+            'Stmts',
+            'Stmt',
+            'Stmt',
+            'Stmt',
+            'Stmt',
+            'Stmt',
+            'If',
+            'If',
+            'Else',
+            'Else',
+            'Expr',
+            'Expr',
+            'Expr',
+            'Arit',
+            'Arit',
+            'Factor',
+            'Factor',
+            'Factor',
+            'Rel',
+            'Log',
+            'Log',
+            'For',
+            'For',
+            'Forexpr',
+            'Postfix',
+            'Postfix',
+            'Read',
+            'Write',
+            'Type',
+            'Type',
+            'Type',
+            'Declaration',
+            'Declaration',
+            'Function',
+            'Function',
+            'Params',
+            'Params'
+        ]
 
         # self.error = False
 
@@ -96,41 +141,41 @@ class Syntactic():
             return 27
 
     def notTerminals(self, X):
-        if X == 'A':
+        if X == 'Stmts':
             return 28
-        elif X == 'B':
+        elif X == 'Stmt':
             return 29
-        elif X == 'D':
+        elif X == 'If':
             return 30
-        elif X == 'E':
+        elif X == 'Else':
             return 31
-        elif X == 'J':
+        elif X == 'Expr':
             return 32
-        elif X == 'K':
+        elif X == 'Arit':
             return 33
-        elif X == 'L':
+        elif X == 'Factor':
             return 34
-        elif X == 'M':
+        elif X == 'Rel':
             return 35
-        elif X == 'N':
+        elif X == 'Log':
             return 36
-        elif X == 'F':
+        elif X == 'For':
             return 37
-        elif X == 'O':
+        elif X == 'Forexpr':
             return 38
-        elif X == 'S':
+        elif X == 'Postfix':
             return 39
-        elif X == 'G':
+        elif X == 'Read':
             return 40
-        elif X == 'H':
+        elif X == 'Write':
             return 41
-        elif X == 'I':
+        elif X == 'Type':
             return 42
-        elif X == 'Q':
+        elif X == 'Declaration':
             return 43
-        elif X == 'C':
+        elif X == 'Function':
             return 44
-        elif X == 'R':
+        elif X == 'Params':
             return 45
 
     # Semântico => S-Atribuído
@@ -155,19 +200,21 @@ class Syntactic():
             print("top: ", top)
 
             # Olha o topo da lista de tokens
-            action = self.tableSyntax[top][self.terminals(self.lex.tokens_list[buffer].getType())]
+            action = self.tableSyntax[top][self.terminals(
+                self.lex.tokens_list[buffer].getType())]
+
+            print(self.lex.tokens_list[buffer].getType())
 
             if action[0] == 's':
                 self.shift(int(action[1:]), buffer)
                 buffer += 1
             elif action[0] == 'r':
                 self.reduce(int(action[1:]), buffer)
-                buffer += 1
             elif action[0] == 'e':
                 print("Error State...")
             else:
                 print("Something is wrong...")
-            
+
             # 0, hyaline, 9
             # 0, hyaline, 9, 'main', 23
             # 0, hyaline, 9, 'main', 23, (, 40
@@ -182,11 +229,13 @@ class Syntactic():
             # OBS.: 74 com '+' não tem na tabela da gramática, verificar problema!
 
     def shift(self, state, buffer):
+        print('Sstate: ', state)
+        print('Sbuffer', buffer)
+
         self.stack.push(self.lex.tokens_list[buffer].getLexema())
         self.stack.push(state)
-            
         print(self.stack.items)
-    
+
     def reduce(self, state, buffer):
         # Reduce => exemplo: R3
         # Vai para a produção 3
@@ -199,11 +248,13 @@ class Syntactic():
             self.stack.pop()
             self.stack.pop()
 
-        self.stack.push(self.productions[state-1])
-        action = int(self.tableSyntax[self.stack.items[len(self.stack.items)-2]][self.notTerminals(self.stack.items[len(self.stack.items)-1])])
+        self.stack.push(self.productions[state])
+        action = int(self.tableSyntax[self.stack.items[len(
+            self.stack.items)-2]][self.notTerminals(self.stack.items[len(self.stack.items)-1])])
         self.stack.push(action)
-        
+
         print(self.stack.items)
+
 
 sync = Syntactic()
 sync.start()
