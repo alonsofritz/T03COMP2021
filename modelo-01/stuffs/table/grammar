@@ -47,12 +47,10 @@ Stmt -> If Else | For | Read | Write | Declaration ;
 If -> qui Rel { Stmt | qui Log { Stmt
 Else -> cela entulesse { Stmt } | }
 Expr -> Arit | Rel | id Log
-
 Arit -> Arit opa Factor | Factor
 Factor -> id | number | ( Arit )
 Rel -> Arit opr Arit
 Log -> opl id Log | opl boolean
-
 For -> an ( note Forexpr ) car { Stmt } | an ( Forexpr ) car { Stmt }
 Forexpr -> id = Factor , id oprel Factor , id Postfix
 Postfix -> ++ | --
@@ -108,3 +106,58 @@ PRODUÇÕES:
 37) 'Function -> hyaline id ( ) { Stmt }',
 38) 'Params -> Type id , Params',
 39) 'Params -> Type id',
+
+--------------------------------------------------------------
+B0 -> B
+B -> iqua DB C
+DB -> iqua EDB
+EDB -> D EDB | metta
+D -> TYPE id ;
+TYPE -> note | liltengwa | yulmavene
+C -> IO C | ASS C | DCOND C | dath
+IO -> ista id ; | sarme OV ;
+OV -> number | string | boolean | id
+ASS -> id = RS ;
+RS -> ROP opa ROP | ROP
+ROP -> id | number
+DCOND -> COND ECOND
+COND -> qui ( LOP ) ta
+LOP -> ROP opl ROP
+ECOND -> IO ECOND | ASS ECOND | DCOND ECOND | metta
+
+
+
+grammar = [
+0	'B0 -> B',
+1	'B -> iqua DB C',
+2	'DB -> iqua EDB',
+3	'EDB -> D EDB',
+4	'EDB -> metta',
+5	'D -> TYPE id ;',
+6	'TYPE -> note',
+7	'TYPE -> liltengwa',
+8	'TYPE -> yulmavene',
+9	'C -> IO C',
+10	'IO -> ista id ;',
+11	'IO -> sarme OV ;',
+12	'OV -> number',
+13	'OV -> string',
+14	'OV -> boolean',
+15	'OV -> id',
+16	'C -> ASS C',
+17	'ASS -> id = RS ;',
+18	'RS -> ROP opa ROP',
+19	'RS -> ROP',
+20	'ROP -> id',
+21	'ROP -> number',
+22	'C -> DCOND C',
+23	'DCOND -> COND ECOND',
+24	'COND -> qui ( LOP ) ta',
+25	'LOP -> ROP opl ROP',
+26	'ECOND -> IO ECOND',
+27	'ECOND -> ASS ECOND',
+28	'ECOND -> DCOND ECOND',
+29	'ECOND -> metta',
+30	'C -> dath'
+]
+

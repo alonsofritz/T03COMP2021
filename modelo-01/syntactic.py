@@ -21,7 +21,7 @@ class Syntactic():
 
         # Tabela sintática
         self.tableExcel = pd.read_excel(
-            './stuffs/table/table.xlsx', skiprows=1, index_col=0)
+            './stuffs/table/table2.xlsx', skiprows=1, index_col=0)
         self.tableSyntax = self.tableExcel.to_numpy()
 
         # Arquivo de saída do sintático
@@ -33,51 +33,42 @@ class Syntactic():
         self.stack.push(0)
 
         # Quantidade de elementos gerados por uma produção
-        self.sizeProduction = [1,  2,  1,  2,  2,  1,  1,  1,  2,  4,  4,  5,  1,  1,  1,
-                               2,  3,  1, 1, 1, 3, 3, 3, 2, 9, 8, 10, 1, 1, 5, 5, 1, 1, 1, 2, 4, 8, 7, 4, 2]
+        self.sizeProduction = [1, 3, 2, 2, 1, 3, 1, 1, 1, 2, 3, 3,
+                               1, 1, 1, 1, 2, 4, 3, 1, 1, 1, 2, 2, 5, 3, 2, 2, 2, 1, 1]
 
         # Produções existentes
         self.productions = [
-            'Stmts',
-            'Stmts',
-            'Stmts',
-            'Stmts',
-            'Stmt',
-            'Stmt',
-            'Stmt',
-            'Stmt',
-            'Stmt',
-            'If',
-            'If',
-            'Else',
-            'Else',
-            'Expr',
-            'Expr',
-            'Expr',
-            'Arit',
-            'Arit',
-            'Factor',
-            'Factor',
-            'Factor',
-            'Rel',
-            'Log',
-            'Log',
-            'For',
-            'For',
-            'Forexpr',
-            'Postfix',
-            'Postfix',
-            'Read',
-            'Write',
-            'Type',
-            'Type',
-            'Type',
-            'Declaration',
-            'Declaration',
-            'Function',
-            'Function',
-            'Params',
-            'Params'
+            'B0',
+            'B',
+            'DB',
+            'EDB',
+            'EDB',
+            'D',
+            'TYPE',
+            'TYPE',
+            'TYPE',
+            'C',
+            'IO',
+            'IO',
+            'OV',
+            'OV',
+            'OV',
+            'OV',
+            'C',
+            'ASS',
+            'RS',
+            'RS',
+            'ROP',
+            'ROP',
+            'C',
+            'DCOND',
+            'COND',
+            'LOP',
+            'ECOND',
+            'ECOND',
+            'ECOND',
+            'ECOND',
+            'C'
         ]
 
         # self.error = False
@@ -87,96 +78,78 @@ class Syntactic():
             return 0
         elif x == 'DEL_RP':
             return 1
-        elif x == 'OP_PP':
-            return 2
-        elif x == 'DEL_COM':
-            return 3
-        elif x == 'OP_MM':
-            return 4
         elif x == 'DEL_SC':
-            return 5
+            return 2
         elif x == 'OP_ASS':
-            return 6
-        elif x == 'KW_an':
-            return 7
+            return 3
         elif x == 'boolean':
-            return 8
-        elif x == 'KW_car':
-            return 9
-        elif x == 'KW_cela':
-            return 10
-        elif x == 'KW_entulesse':
-            return 11
-        elif x == 'KW_hyaline':
-            return 12
+            return 4
+        elif x == 'KW_dath':
+            return 5
         elif x == 'id':
-            return 13
+            return 6
+        elif x == 'KW_iqua':
+            return 7
         elif x == 'KW_ista':
-            return 14
+            return 8
         elif x == 'KW_liltengwa':
-            return 15
+            return 9
+        elif x == 'KW_metta':
+            return 10
         elif x == 'KW_note':
-            return 16
+            return 11
         elif x == 'number':
-            return 17
+            return 12
         elif x == 'OP_ADD' or x == 'OP_DIV' or x == 'OP_MIN' or x == 'OP_MOD' or x == 'OP_MUL':
-            return 18
-        elif x == 'OP_ar' or x == 'OP_hela' or x == 'OP_helaer' or x == 'OP_la':
-            return 19
+            return 13
         elif x == 'OP_EQ' or x == 'OP_GE' or x == 'OP_GT' or x == 'OP_LE' or x == 'OP_LT' or x == 'OP_NE':
-            return 20
+            return 14
         elif x == 'KW_qui':
-            return 21
+            return 15
         elif x == 'KW_sarme':
-            return 22
+            return 16
         elif x == 'string':
-            return 23
+            return 17
+        elif x == 'KW_ta':
+            return 18
         elif x == 'KW_yulmavene':
-            return 24
-        elif x == 'DEL_LCB':
-            return 25
-        elif x == 'DEL_RCB':
-            return 26
+            return 19
         elif x == '$':
-            return 27
+            return 20
 
     def notTerminals(self, X):
-        if X == 'Stmts':
+        if X == 'B0':
+            return 21
+        elif X == 'B':
+            return 22
+        elif X == 'DB':
+            return 23
+        elif X == 'EDB':
+            return 24
+        elif X == 'D':
+            return 25
+        elif X == 'TYPE':
+            return 26
+        elif X == 'C':
+            return 27
+        elif X == 'IO':
             return 28
-        elif X == 'Stmt':
+        elif X == 'OV':
             return 29
-        elif X == 'If':
+        elif X == 'ASS':
             return 30
-        elif X == 'Else':
+        elif X == 'RS':
             return 31
-        elif X == 'Expr':
+        elif X == 'ROP':
             return 32
-        elif X == 'Arit':
+        elif X == 'DCOND':
             return 33
-        elif X == 'Factor':
+        elif X == 'COND':
             return 34
-        elif X == 'Rel':
+        elif X == 'LOP':
             return 35
-        elif X == 'Log':
+        elif X == 'ECOND':
             return 36
-        elif X == 'For':
-            return 37
-        elif X == 'Forexpr':
-            return 38
-        elif X == 'Postfix':
-            return 39
-        elif X == 'Read':
-            return 40
-        elif X == 'Write':
-            return 41
-        elif X == 'Type':
-            return 42
-        elif X == 'Declaration':
-            return 43
-        elif X == 'Function':
-            return 44
-        elif X == 'Params':
-            return 45
 
     # Semântico => S-Atribuído
     # O que vai ser avaliado de aspecto semântico? (Especificação)
@@ -203,8 +176,6 @@ class Syntactic():
             action = self.tableSyntax[top][self.terminals(
                 self.lex.tokens_list[buffer].getType())]
 
-            print(self.lex.tokens_list[buffer].getType())
-
             if action[0] == 's':
                 self.shift(int(action[1:]), buffer)
                 buffer += 1
@@ -212,6 +183,9 @@ class Syntactic():
                 self.reduce(int(action[1:]), buffer)
             elif action[0] == 'e':
                 print("Error State...")
+            elif action == 'acc':
+                print("Compilado com Sucesso")
+                break
             else:
                 print("Something is wrong...")
 

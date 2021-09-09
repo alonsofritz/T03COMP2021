@@ -1,0 +1,29 @@
+iqua --beginning
+  iqua
+    note varIntA; --inteiro
+    note varIntB; 
+    liltengwa varCharC; --String
+    yulmavene varBoolD; --Lógico(True or False)
+  metta
+
+  sarme 'Escrever em Tela';
+  ista varIntA; --Leitura do teclado
+  sarme 'Escrever em Tela Novamente';
+  ista varIntB; --Leitura do teclado
+
+  qui(varIntA > 2)
+  ta
+    qui(varIntB > varIntA)
+    ta
+      sarme 'B eh maior que 2';
+    metta
+  metta
+
+  varIntB = varIntB + 1;
+  varIntA = varIntA + 2;
+  
+  sarme varIntA;
+  sarme varIntB;
+  sarme varCharC;
+
+dath
